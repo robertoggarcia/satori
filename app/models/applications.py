@@ -23,4 +23,4 @@ class Applications(Base):
     deal_stage = Column(String)
     created_at = Column(DateTime, default=datetime.datetime.utcnow)
     active = Column(Boolean, default=True)
-    lines_coverage = relationship("LinesCoverage", secondary="application_lines_coverage", back_populates='applications')
+    lines_coverage = relationship(LinesCoverage, secondary=association_table)
