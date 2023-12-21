@@ -1,0 +1,9 @@
+*
+!requirements.txt
+!docker-entrypoint.sh
+!*.py
+!pyproject.toml
+!poetry.lock
+!app/
+!db/migrations/
+!tests/
