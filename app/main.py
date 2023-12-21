@@ -2,12 +2,14 @@ import fastapi
 from psycopg2 import OperationalError
 from retrying import retry
 from secure import Secure
+from starlette.websockets import WebSocketDisconnect
 
 from app.api import healthcheck
 from app.api.v1.router import api_router
 from app.config.logger import init_logging
 from app.db.session import SessionLocal
 from app.exceptions.server import DeployError
+from app.utils.sockets import ConnectionManager
 
 secure_headers = Secure()
 
@@ -61,6 +63,35 @@ async def set_secure_headers(request, call_next):
     response = await call_next(request)
     secure_headers.framework.fastapi(response)
     return response
+
+
+manager = ConnectionManager()
+
+
+@app.websocket("/ws")
+async def websocket_endpoint(websocket: fastapi.WebSocket):
+    """
+    This endpoint handles websocket connections
+    once an application is created, it will send a message to all connected clients
+        await manager.broadcast({"message": "New application added!"})
+
+    On the frontend side, it will receive the message and display it
+    const socket = new WebSocket("ws://localhost:8000/ws");
+
+        socket.onmessage = function (event) {
+            const updates = document.getElementById("updates");
+            const li = document.createElement("li");
+            li.appendChild(document.createTextNode(event.data));
+            updates.appendChild(li);
+        };
+    """
+    await manager.connect(websocket)
+    try:
+        while True:
+            data = await websocket.receive_text()
+            await manager.broadcast({"message": data})
+    except WebSocketDisconnect:
+        manager.disconnect(websocket)
 
 
 app.include_router(healthcheck.router)
