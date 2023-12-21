@@ -74,16 +74,6 @@ async def websocket_endpoint(websocket: fastapi.WebSocket):
     This endpoint handles websocket connections
     once an application is created, it will send a message to all connected clients
         await manager.broadcast({"message": "New application added!"})
-
-    On the frontend side, it will receive the message and display it
-    const socket = new WebSocket("ws://localhost:8000/ws");
-
-        socket.onmessage = function (event) {
-            const updates = document.getElementById("updates");
-            const li = document.createElement("li");
-            li.appendChild(document.createTextNode(event.data));
-            updates.appendChild(li);
-        };
     """
     await manager.connect(websocket)
     try:

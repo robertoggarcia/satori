@@ -116,11 +116,27 @@ Results:
 ## Code structure explanation
 * `main.py`: FastApi main application server. This application loads the api router to expose the endpoints.
   * `/ws` here you can find an endpoint handles websocket connections to manage realtime events on frontend side.
+  *  On the frontend side, it will receive the message and display it
+    ```const socket = new WebSocket("ws://localhost:8000/ws");
+
+        socket.onmessage = function (event) {
+            const updates = document.getElementById("updates");
+            const li = document.createElement("li");
+            li.appendChild(document.createTextNode(event.data));
+            updates.appendChild(li);
+        };```
 * `api`: include the applications endpoints to serve db data, here we can include some business logic
 * `crud`: Data access layer to crud transactions, to allow us to abstract the db access
 * `db`: DB session helpers
 * `models`: Data models definitions
 
+## TODOs
+The following points are project improvements that can be addressed in the future due to time constraints:
+* CRUD applications endpoints
+* Search functionality
+* Unit tests
+* JWT authentication
+* PDF ML processing background task
 
 ## API Docs
 `http://0.0.0.0:8000/docs` or
