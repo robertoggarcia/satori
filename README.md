@@ -134,13 +134,14 @@ Results:
 The following points are project improvements that can be addressed in the future due to time constraints:
 * CRUD applications endpoints
 * Search functionality
-* Unit tests
+* ~~Unit tests~~
 * JWT authentication
 * PDF ML processing background task
 
 ## API Docs
 `http://0.0.0.0:8000/docs` or
 `http://127.0.0.1:8000/docs`
+![img.png](static/img.png)
 
 ## Getting Started
 

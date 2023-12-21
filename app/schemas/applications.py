@@ -14,4 +14,4 @@ class ApplicationSchema(BaseModel):
     sic: str
     status: str
     deal_stage: str
-    lines_coverage: List
+    lines_coverage: List[str]

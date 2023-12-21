@@ -10,3 +10,6 @@ logs:
 
 test:
 	docker-compose -p satori exec app pytest -v --cov=app tests/
+
+restart:
+	docker-compose -p satori restart

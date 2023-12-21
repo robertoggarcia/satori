@@ -1,6 +1,4 @@
-from typing import Any, Dict, Generic, List, Optional, Type, TypeVar, Union
-
-from fastapi.encoders import jsonable_encoder
+from typing import Generic, List, Type, TypeVar
 from pydantic import BaseModel
 from sqlalchemy.orm import Session
 
@@ -22,6 +20,6 @@ class CRUDBase(Generic[ModelType, SchemaType]):
         """
         self.model = model
 
-    def filter(self, db: Session, skip: int = 0, limit: int = 10, **kwargs) -> List[SchemaType]:
+    def filter(self, db: Session, skip: int = 0, limit: int = 10, **kwargs) -> List[ModelType]:
         """Get a list of ModelType filtered by **kwargs"""
-        return jsonable_encoder(db.query(self.model).filter_by(**kwargs).offset(skip).limit(limit).all())
+        return db.query(self.model).filter_by(**kwargs).offset(skip).limit(limit).all()
