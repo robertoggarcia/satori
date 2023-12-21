@@ -113,6 +113,15 @@ Results:
     }
   ```
 
+## Code structure explanation
+* `main.py`: FastApi main application server. This application loads the api router to expose the endpoints.
+  * `/ws` here you can find an endpoint handles websocket connections to manage realtime events on frontend side.
+* `api`: include the applications endpoints to serve db data, here we can include some business logic
+* `crud`: Data access layer to crud transactions, to allow us to abstract the db access
+* `db`: DB session helpers
+* `models`: Data models definitions
+
+
 ## API Docs
 `http://0.0.0.0:8000/docs` or
 `http://127.0.0.1:8000/docs`
